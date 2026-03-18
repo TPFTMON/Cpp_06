@@ -17,9 +17,6 @@
 // Classes:
 class ScalarConverter{
 
-    private:
-        // ... some private stuff
-
     public:
         // Orthodox Canonical Form:
         ScalarConverter();
@@ -28,7 +25,6 @@ class ScalarConverter{
         ~ScalarConverter();
 
         // Other member functions:
-        // ... some members
 
 };
 
