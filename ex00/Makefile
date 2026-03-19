@@ -1,6 +1,6 @@
-NAME		=
+NAME		= convert
 
-SRCS		= 
+SRCS		= ScalarConverter.cpp main.cpp
 
 OBJ_DIR		= obj
 

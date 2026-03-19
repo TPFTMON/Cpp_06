@@ -3,6 +3,7 @@
 
 // Includes:
 # include <iostream>
+# include <string>
 
 
 // Messages:
@@ -17,14 +18,16 @@
 // Classes:
 class ScalarConverter{
 
-    public:
+    private:
         // Orthodox Canonical Form:
-        ScalarConverter();
-        ScalarConverter(const ScalarConverter &to_copy);
-        ScalarConverter& operator=(const ScalarConverter &assign);
-        ~ScalarConverter();
+        // ScalarConverter();
+        // ScalarConverter(const ScalarConverter &to_copy);
+        // ScalarConverter& operator=(const ScalarConverter &assign);
+        // ~ScalarConverter();
 
+    public:
         // Other member functions:
+        static void convert(const std::string &strLiteral);
 
 };
 
