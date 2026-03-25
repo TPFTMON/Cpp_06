@@ -1,6 +1,6 @@
-NAME		=
+NAME		= Serializer
 
-SRCS		= 
+SRCS		= Serializer.cpp main.cpp
 
 OBJ_DIR		= obj
 

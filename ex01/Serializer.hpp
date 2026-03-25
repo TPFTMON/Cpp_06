@@ -3,28 +3,27 @@
 
 // Includes:
 # include <iostream>
+# include <stdint.h>
 
 
 // Classes:
 class Data{
     public:
         int _importantInt;
-        float _normalFloat;
+        double _normalDouble;
         std::string _justString;
 };
 
 class Serializer{
 
+    // private:
+
     public:
 
         // Other member functions:
-        uintptr_t serialize(Data* ptr);
-        Data* deserialize(uintptr_t raw);
+        static uintptr_t serialize(Data* ptr);
+        static Data* deserialize(uintptr_t raw);
 
 };
-
-
-// Other:
-// ...
 
 #endif
