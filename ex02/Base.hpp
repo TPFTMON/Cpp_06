@@ -3,6 +3,7 @@
 
 // Includes:
 # include <iostream>
+# include <cstdlib>
 
 
 // Messages:
@@ -17,15 +18,9 @@
 // Classes:
 class Base{
 
-    private:
-        // ... some private stuff
-
     public:
-        // Orthodox Canonical Form:
-        Base();
-        Base(const Base &to_copy);
-        Base& operator=(const Base &assign);
-        ~Base();
+        virtual ~Base();
+        // Without a virtual destructor, the class isn't polymorphic, and dynamic_cast will not compile.
 
         // Other member functions:
         Base* generate(void);

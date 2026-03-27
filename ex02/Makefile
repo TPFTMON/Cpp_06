@@ -1,6 +1,6 @@
-NAME		=
+NAME		= identify
 
-SRCS		= 
+SRCS		= Base.cpp main.cpp
 
 OBJ_DIR		= obj
 
