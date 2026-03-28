@@ -5,8 +5,60 @@
 //                OTHER SCALARCONVERTER MEMBER FUNCTIONS
 // ================================================================
 
+// God damn this exercise.
+
+bool isChar(const std::string &strLiteral){
+
+    return (strLiteral.length() == 1 && !std::isdigit(strLiteral[0]));
+}
+
+bool isPseudoFloat(const std::string &strLiteral){
+
+    std::string pseudoFloatLiterals[] = {"-inff", "+inff", "nanf"};
+    for (int i = 0; i < 3; ++i){
+        if (strLiteral == pseudoFloatLiterals[i]){
+            return true;
+        }
+    }
+    return false;
+}
+
+bool isPseudoDouble(const std::string &strLiteral){
+
+    std::string pseudoDoubleLiterals[] = {"-inf", "+inf", "nan"};
+    for (int i = 0; i < 3; ++i){
+        if (strLiteral == pseudoDoubleLiterals[i]){
+            return true;
+        }
+    }
+    return false;
+}
+
+bool isFloat(const std::string &strLiteral){
+
+    if (strLiteral.find('.') != std::string::npos && strLiteral[strLiteral.length() - 1] == 'f'){
+        return true;
+    }
+    return false;
+}
+
+bool isDouble(const std::string &strLiteral){
+
+    if (strLiteral.find('.') != std::string::npos && strLiteral[strLiteral.length() - 1] != 'f'){
+        return true;
+    }
+    return false;
+}
+
 void ScalarConverter::convert(const std::string &strLiteral){
 
+    // if (isChar(strLiteral)){
+
+    // }
+
+
+    std::cout << "float: " << static_cast<float>(literal) << ".0f\n";
+    std::cout << "double: " << static_cast<double>(literal) << ".0\n";
 }
 
 void ScalarConverter::convert(const std::string &strLiteral){

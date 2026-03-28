@@ -6,25 +6,25 @@
 int main(){
 
     srand(time(0));
-    Base* base = new Base();
 
-    Base* randomPtr = base->generate();
+    Base* randomPtr = generate();
     std::cout << "Identifying with pointer: randomPtr is of type: {";
-    base->identify(randomPtr);
+    identify(randomPtr);
     std::cout << "}\n\n";
 
 
     std::cout << "Identifying with reference: randomPtr is of type: {";
-    base->identify(*randomPtr);
+    identify(*randomPtr);
     std::cout << "}\n\n";
 
 
+    // Base* base = new Base();
     // std::cout << "Identifying with reference: base is of type: {";
-    // base->identify(*base);
+    // identify(*base);
     // std::cout << "}\n";
 
-    delete base;
     delete randomPtr;
+    // delete base;
 
     return (0);
 }

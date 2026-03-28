@@ -15,11 +15,11 @@ Base::~Base(){
 
 
 // ================================================================
-//                OTHER BASE MEMBER FUNCTIONS
+//                OTHER BASE RELATED FUNCTIONS
 // ================================================================
 
 // returns allocated instance of A, B or C (randomly)
-Base* Base::generate(void){
+Base* generate(void){
 
     int whichClass = rand() % 3;
 
@@ -34,7 +34,7 @@ Base* Base::generate(void){
     return (NULL);
 }
 
-void  Base::identify(Base* p){
+void  identify(Base* p){
 
     if (dynamic_cast<A*>(p)){      // dynamic_cast returns a NULL pointer is the cast fails
         std::cout << "A";
@@ -50,7 +50,7 @@ void  Base::identify(Base* p){
     // }
 }
 
-void  Base::identify(Base& p){
+void  identify(Base& p){
 
     try{                              // I had to use try-catch blocks here because dynamic_cast throws
         (void)dynamic_cast<A&>(p);    // an exception that is defined in std::typeinfo when the cast fails

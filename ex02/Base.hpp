@@ -19,11 +19,11 @@ class Base{
         virtual ~Base();
         // Without a virtual destructor, the class isn't polymorphic, and dynamic_cast will not compile.
 
-        // Other member functions:
-        Base* generate(void);
-        void  identify(Base* p);
-        void  identify(Base& p);
+    };
 
-};
+// Other functions:
+Base* generate(void);
+void  identify(Base* p);
+void  identify(Base& p);
 
-#endif
+    #endif
