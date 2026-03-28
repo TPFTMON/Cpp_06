@@ -14,7 +14,6 @@ Base::~Base(){
 }
 
 
-
 // ================================================================
 //                OTHER BASE MEMBER FUNCTIONS
 // ================================================================
@@ -22,7 +21,6 @@ Base::~Base(){
 // returns allocated instance of A, B or C (randomly)
 Base* Base::generate(void){
 
-    srand(time(0));
     int whichClass = rand() % 3;
 
     switch (whichClass){

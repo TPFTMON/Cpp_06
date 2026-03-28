@@ -5,6 +5,7 @@
 
 int main(){
 
+    srand(time(0));
     Base* base = new Base();
 
     Base* randomPtr = base->generate();
