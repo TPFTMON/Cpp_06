@@ -2,9 +2,13 @@
 # define SCALARCONVERTER_HPP
 
 // Includes:
-# include <iostream>
+# include <iostream>     // also for std::fixed and std::setprecision
 # include <string>
 # include <cstdlib>
+# include <iomanip>
+# include <cmath>
+# include <climits>
+// # include <cctype>
 
 
 // Classes:

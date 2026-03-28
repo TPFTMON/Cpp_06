@@ -5,148 +5,69 @@
 //                OTHER SCALARCONVERTER MEMBER FUNCTIONS
 // ================================================================
 
-// God damn this exercise.
+// Okay. Now I'm finally happpy.
 
-bool isChar(const std::string &strLiteral){
+static void printConversions(double dBuffer, bool isPseudo){
 
-    return (strLiteral.length() == 1 && !std::isdigit(strLiteral[0]));
+    // 1. CHAR
+    std::cout << "char: ";
+    if (isPseudo || dBuffer < 0 || dBuffer > 127 || std::isnan(dBuffer))
+        std::cout << "impossible" << "\n";
+    else if (!std::isprint(static_cast<int>(dBuffer)))
+        std::cout << "Non displayable" << "\n";
+    else
+        std::cout << "'" << static_cast<char>(dBuffer) << "'" << "\n";
+
+    // 2. INT
+    std::cout << "int: ";
+    if (isPseudo || dBuffer < INT_MIN || dBuffer > INT_MAX || std::isnan(dBuffer))
+        std::cout << "impossible" << "\n";
+    else
+        std::cout << static_cast<int>(dBuffer) << "\n";
+
+    // 3. FLOAT & DOUBLE
+    std::cout << std::fixed << std::setprecision(1);
+    std::cout << "float: " << static_cast<float>(dBuffer) << "f" << "\n";
+    std::cout << "double: " << dBuffer << "\n";
 }
 
-bool isPseudoFloat(const std::string &strLiteral){
+void ScalarConverter::convert(const std::string &str){
 
-    std::string pseudoFloatLiterals[] = {"-inff", "+inff", "nanf"};
-    for (int i = 0; i < 3; ++i){
-        if (strLiteral == pseudoFloatLiterals[i]){
-            return true;
-        }
+    char* end;
+    double dBuffer = std::strtod(str.c_str(), &end);
+
+    if (str == "nan" || str == "nanf" || str == "+inf" ||
+            str == "+inff" || str == "-inf" || str == "-inff"){
+        double dBuffer = std::strtod(str.c_str(), NULL);
+        printConversions(dBuffer, true);
+        return;
     }
-    return false;
+
+    if (str.length() == 1 && std::isprint(str[0]) && !std::isdigit(str[0])){  // then it's a char
+        char c = str[0];
+        std::cout << "The actual input's type: char\n";
+        printConversions(static_cast<double>(c), false);
+        return;
+    }
+
+    if (*end == 'f' && *(end + 1) == '\0'){     // If 'end' points to 'f' and it's the last char, then it's a float
+        // Parsed as ''''float''''
+        std::cout << "The actual input's type: float\n";
+        printConversions(dBuffer, false);
+    }
+    else if (*end == '\0' && str.find('.') != std::string::npos){  // If 'end' points to null and there's a decimal point,
+        std::cout << "The actual input's type: double\n";          // then it's a double
+        printConversions(dBuffer, false);
+    }
+    else if (*end == '\0' && str.find('.') == std::string::npos){  // If 'end' points to null and there's no decimal point,
+        std::cout << "The actual input's type: int\n";             // then it's an int
+        printConversions(dBuffer, false);
+    }
+    else{
+        std::cout << "The input's type was not recognized." << "\n";
+        std::cout << "char: impossible" << "\n";
+        std::cout << "int: impossible" << "\n";
+        std::cout << "float: nanf" << "\n";
+        std::cout << "double: nan" << "\n";
+    }
 }
-
-bool isPseudoDouble(const std::string &strLiteral){
-
-    std::string pseudoDoubleLiterals[] = {"-inf", "+inf", "nan"};
-    for (int i = 0; i < 3; ++i){
-        if (strLiteral == pseudoDoubleLiterals[i]){
-            return true;
-        }
-    }
-    return false;
-}
-
-bool isFloat(const std::string &strLiteral){
-
-    if (strLiteral.find('.') != std::string::npos && strLiteral[strLiteral.length() - 1] == 'f'){
-        return true;
-    }
-    return false;
-}
-
-bool isDouble(const std::string &strLiteral){
-
-    if (strLiteral.find('.') != std::string::npos && strLiteral[strLiteral.length() - 1] != 'f'){
-        return true;
-    }
-    return false;
-}
-
-void ScalarConverter::convert(const std::string &strLiteral){
-
-    // if (isChar(strLiteral)){
-
-    // }
-
-
-    std::cout << "float: " << static_cast<float>(literal) << ".0f\n";
-    std::cout << "double: " << static_cast<double>(literal) << ".0\n";
-}
-
-void ScalarConverter::convert(const std::string &strLiteral){
-
-    // 1:
-    // Is it a char? length == 1 and not a digit.
-
-    // Is it a pseudo-literal? Check against "-inff", "+inff", "nanf", "-inf", "+inf", "nan".
-
-    // Is it an int, float, or double? Look for ., f, and valid digits.
-
-    if (strLiteral.length() == 1 && !std::isdigit(strLiteral[0])){
-        char c = strLiteral[0];                                // Then it is a char.
-        std::cout << "Initial type: char\n";
-        std::cout << "char: '" << c << "'\n";
-        std::cout << "int: " << static_cast<int>(c) << "\n";
-        std::cout << "float: " << static_cast<float>(c) << ".0f\n";
-        std::cout << "double: " << static_cast<double>(c) << ".0\n"; ////////// Should I print .0 and .0f? Why doesn't the static_cast do it itself?
-        return ;
-    }
-
-    // think what to do with non-displayable chars. ////////////////////////////
-
-    std::string pseudoFloatLiterals[] = {"-inff", "+inff", "nanf"};
-    for (int i = 0; i < 3; ++i){
-        if (strLiteral == pseudoFloatLiterals[i]){          // Then it is a pseudo-literal float.
-            float f = static_cast<float>(std::strtof(strLiteral.c_str(), NULL));
-            std::cout << "Initial type: float\n";
-            std::cout << "char: impossible\n";
-            std::cout << "int: impossible\n";
-            // std::cout << "char: " << static_cast<char>(std::strtod(strLiteral.c_str(), NULL)) << "\n";
-            // std::cout << "int: " << static_cast<int>(std::strtod(strLiteral.c_str(), NULL)) << "\n";
-
-            // std::cout << "float: " << strLiteral << "\n";
-            // std::cout << "double: " << strLiteral.substr(0, strLiteral.length() - 1) << "\n";
-            std::cout << "float: " << static_cast<float>(f) << "\n";
-            std::cout << "double: " << static_cast<double>(f) << "\n";
-            return ;
-        }
-    }
-
-    std::string pseudoDoubleLiterals[] = {"-inf", "+inf", "nan"};
-    for (int i = 0; i < 3; ++i){
-        if (strLiteral == pseudoDoubleLiterals[i]){            // Then it is a pseudo-literal double.
-            std::cout << "Initial type: double\n";
-            std::cout << "char: impossible\n";
-            std::cout << "int: impossible\n";
-            std::cout << "float: " << static_cast<float>(std::strtof(strLiteral.c_str(), NULL)) << "\n";
-            std::cout << "double: " << static_cast<double>(std::strtod(strLiteral.c_str(), NULL)) << "\n";
-            return ;
-        }
-    }
-
-    if (strLiteral.find('.') != std::string::npos){          // Then it is a float or double.
-        if (strLiteral[strLiteral.length() - 1] == 'f'){                     // Then it is a float.
-            std::cout << "Initial type: float\n";
-            std::cout << "char: " << static_cast<char>(std::strtod(strLiteral.c_str(), NULL)) << "\n";
-            std::cout << "int: " << static_cast<int>(std::strtod(strLiteral.c_str(), NULL)) << "\n";;
-            std::cout << "float: " << static_cast<float>(std::strtof(strLiteral.c_str(), NULL)) << "\n";
-            std::cout << "double: " << static_cast<double>(std::strtod(strLiteral.c_str(), NULL)) << "\n";
-            return ;
-        }
-        else{                                               // Then it is a double.
-            std::cout << "Initial type: double\n";
-            std::cout << "char: " << static_cast<char>(std::strtod(strLiteral.c_str(), NULL)) << "\n";
-            std::cout << "int: " << static_cast<int>(std::strtod(strLiteral.c_str(), NULL)) << "\n";;
-            std::cout << "float: " << static_cast<float>(std::strtof(strLiteral.c_str(), NULL)) << "\n";
-            std::cout << "double: " << static_cast<double>(std::strtod(strLiteral.c_str(), NULL)) << "\n";
-            return ;
-        }
-    }
-
-    if (strLiteral.find_first_not_of("-+0123456789") == std::string::npos){          // Then it is an int.
-        std::cout << "Initial type: int\n";
-        std::cout << "char: " << static_cast<char>(std::strtol(strLiteral.c_str(), NULL, 10)) << "\n";
-        std::cout << "int: " << static_cast<int>(std::strtol(strLiteral.c_str(), NULL, 10)) << "\n";;
-        std::cout << "float: " << static_cast<float>(std::strtof(strLiteral.c_str(), NULL)) << "\n";
-        std::cout << "double: " << static_cast<double>(std::strtod(strLiteral.c_str(), NULL)) << "\n";
-        return ;
-    }
-
-    std::cout << "The literal does not match any of the expected formats for char, int, float, or double.\n";
-
-}
-
-
-// ================================================================
-//                  OTHER SCALARCONVERTER FUNCTIONS
-// ================================================================
-
-// ... other functions
